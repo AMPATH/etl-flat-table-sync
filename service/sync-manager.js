@@ -5,7 +5,19 @@ const syncService = require('./sync-service');
 const def = {
   syncBaseTables,
   queuePatients,
-  updateSummaries
+  updateSummaries,
+  nightlyUpdates,
+  maintenance
+}
+
+function maintenance(){
+  return new Promise(async (resolve,reject) => {
+      await syncService.startSlave();
+      await syncService.killIdleConnections();
+      resolve('Maintenance done ..');
+
+  });
+
 }
 
 function syncBaseTables(){
@@ -26,7 +38,7 @@ function queuePatients(){
           await queue;
           console.log('Done', index);
       });
-      resolve('All done');
+      resolve('All summaries updated done');
     });
  
 }
@@ -38,6 +50,27 @@ function updateSummaries(){
     syncService.updateFlatAppointment()]
   );
 }
+
+
+function nightlyUpdates(){
+  return new Promise(async (resolve,reject) => {
+      await syncService.updateVitals();
+      await syncService.updateBreastCancerScreening();
+      await syncService.updateCervicalScreening();
+      await syncService.updateOncologyHistory();
+      await syncService.updatePepSummary();
+      await syncService.updateDefaulters();
+      await syncService.updateCaseManager();
+      await syncService.updateFamilyTesting();
+      await syncService.updateHivMonthlySummary();
+      resolve('Done nightly updates ...');
+
+    
+
+  });
+
+}
+
 
 
 

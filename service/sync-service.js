@@ -7,7 +7,18 @@ const def = {
   updateFlatObs,
   updateFlatLabObs,
   updateFlatOrders,
-  updateLabsAndImaging
+  updateLabsAndImaging,
+  updateVitals,
+  updateBreastCancerScreening,
+  updateCervicalScreening,
+  updateOncologyHistory,
+  updatePepSummary,
+  updateDefaulters,
+  updateCaseManager,
+  updateFamilyTesting,
+  updateHivMonthlySummary,
+  startSlave,
+  killIdleConnections
 }
 
 function updateHivSummary(){
@@ -40,6 +51,57 @@ function updateLabsAndImaging(){
   const sql = `call etl.generate_flat_labs_and_imaging("sync",1,15000,100);`
   return runSqlScript(sql);
 }
+function updateVitals (){
+  const sql = `CALL etl.generate_flat_vitals_v2_2();`
+  return runSqlScript(sql);
+}
+
+function updateBreastCancerScreening(){
+  const sql = `CALL etl.generate_flat_breast_cancer_screening_v1_2("sync",1,5000,100);`
+  return runSqlScript(sql);
+}
+function updateCervicalScreening(){
+  const sql = `CALL etl.generate_flat_cervical_cancer_screening_v1_1("sync",1,5000,100);`
+  return runSqlScript(sql);
+}
+
+function updateOncologyHistory(){ 
+  const sql = `CALL etl.generate_flat_onc_patient_history_v1_0("sync",1,500,100);`
+  return runSqlScript(sql);
+}
+
+function updatePepSummary(){
+  const sql = `call generate_pep_summary();`
+  return runSqlScript(sql);
+}
+
+function updateDefaulters(){
+  const sql = `call etl.generate_defaulters();`
+  return runSqlScript(sql);
+}
+
+function updateCaseManager(){
+  const sql = `CALL etl.generate_flat_case_manager("sync",1,10000,10,1);`
+  return runSqlScript(sql);
+}
+
+function updateFamilyTesting(){
+  const sql = `CALL etl.generate_flat_family_testing("sync",1,15000,20,true);`
+  return runSqlScript(sql);
+}
+
+function updateHivMonthlySummary(){
+  const sql = `call etl.generate_hiv_monthly_report_dataset_v1_4("sync",1,100000,100,"2013-01-01");`
+  return runSqlScript(sql);
+}
+function startSlave(){
+  const sql = `start slave`
+  return runSqlScript(sql);
+}
+function killIdleConnections(){
+  const sql = `CALL etl.etl_kill_idle_processes();`
+  return runSqlScript(sql);
+}
 
 function runSqlScript(sqlQuery){
   return new Promise((resolve,reject) => {
@@ -53,7 +115,7 @@ function runSqlScript(sqlQuery){
             console.log("Error", error);
             reject(error);
           } else {
-            console.log("Update Labs and imaging successfull: ", results);
+            console.log("Update successfull: ------------------------ ");
             resolve(results);
           }
         });
