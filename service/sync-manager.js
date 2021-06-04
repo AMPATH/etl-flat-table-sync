@@ -63,6 +63,7 @@ function nightlyUpdates(){
       await syncService.updateCaseManager();
       await syncService.updateFamilyTesting();
       await syncService.updateHivMonthlySummary();
+      await syncService.updateSurgeWeeklyReport();
       resolve('Done nightly updates ...');
 
     
