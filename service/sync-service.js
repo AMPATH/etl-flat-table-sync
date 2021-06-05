@@ -104,7 +104,7 @@ function killIdleConnections(){
   return runSqlScript(sql);
 }
 function updateSurgeWeeklyReport(){
-    const sql = `call etl.generate_surge_weekly_report_dataset_v1(“sync”,10,15000,100,true);`
+    const sql = `call etl.generate_surge_weekly_report_dataset_v1("sync",10,15000,100,true);`
     return runSqlScript(sql);
 }
 
