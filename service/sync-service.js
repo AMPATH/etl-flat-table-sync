@@ -1,5 +1,6 @@
 'use strict';
 const connection = require('../connection/connection');
+const axios = require('axios');
 
 const def = {
   updateHivSummary,
@@ -21,16 +22,17 @@ const def = {
   killIdleConnections,
   updateSurgeWeeklyReport,
   updateCovidScreening,
-  checkHivMissingRecords
+  checkHivMissingRecords,
+  runAmrsGarbageCollection
 }
 
 function updateHivSummary(){
-  const sql = `call build_flat_hiv_summary("build",600,100,1);`;
+  const sql = `call build_flat_hiv_summary("build",700,100,1);`;
   return runSqlScript(sql);  
 }
 
 function updateFlatAppointment(){
-  const sql = `call etl.build_flat_appointment("build",800,100,1);`;
+  const sql = `call etl.build_flat_appointment("build",700,100,1);`;
   return runSqlScript(sql);    
 }
 
@@ -116,6 +118,32 @@ function updateCovidScreening(){
 function checkHivMissingRecords(){
     const sql = `CALL etl.find_missing_hiv_summary_records();`;
     return runSqlScript(sql);
+}
+function runAmrsGarbageCollection(){
+  return new Promise((resolve,reject) => {
+    const config = {
+      method: 'get',
+      url: 'http://10.50.80.44:8080/amrs/monitoring?action=gc',
+      headers: { 
+        'Cookie': 'JSESSIONID=2C98A4699D4CF97C9B88CE45026F772C'
+      }
+    };
+
+    console.log('Hitting garbage collection endpoint..', config.url);
+
+    axios(config)
+    .then((response)=> {
+      console.log('Get response ..',response.status);
+      resolve('AMRS Garbage Collection Successfull...');
+    })
+    .catch((error)=> {
+      console.log('error',error);
+      resolve('AMRS Garbage Collection Successfull...');
+    });
+
+  });
+
+
 }
 
 function runSqlScript(sqlQuery){

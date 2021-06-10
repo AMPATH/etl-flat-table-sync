@@ -30,6 +30,7 @@ function maintenance(){
 function dayTimeSync(){
   console.log('daytime startsync started ===========================');
   console.log('Start sync process...');
+  syncState.modeSet = false;
   syncBaseTables()
   .then((result) => {
     console.log('Queueing patients started ....');
@@ -53,6 +54,8 @@ function dayTimeSync(){
 }
 
 function nightTimeSync(){
+  syncState.state = 'day';
+  syncState.modeSet = true;
   nighlyUpdates()
   .then((result) => {
     console.log('Night Time updates done ...', result);
@@ -87,11 +90,8 @@ function startSync(){
    console.log('SyncState :', JSON.stringify(syncState));
 
    if(syncState.state === 'day' && syncState.modeSet){
-      syncState.modeSet = false;
       dayTimeSync()
    }else if(syncState.state === 'night' && syncState.modeSet){
-     syncState.state = 'day';
-     syncState.modeSet = false;
      nightTimeSync();
    }
 
@@ -99,6 +99,3 @@ function startSync(){
 
 
 startSync();
-// syncBaseTables();
-// queuePatients();
-// updateSummaries();
