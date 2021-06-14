@@ -23,7 +23,10 @@ const def = {
   updateSurgeWeeklyReport,
   updateCovidScreening,
   checkHivMissingRecords,
-  runAmrsGarbageCollection
+  runAmrsGarbageCollection,
+  updatePrepSummary,
+  updatePrepMonthlySummary
+
 }
 
 function updateHivSummary(){
@@ -110,6 +113,14 @@ function killIdleConnections(){
 function updateSurgeWeeklyReport(){
     const sql = `call etl.generate_surge_weekly_report_dataset_v1("sync",10,15000,100,true);`
     return runSqlScript(sql);
+}
+function updatePrepSummary(){
+  const sql = `CALL etl.generate_prep_summary_v1_1_prod("sync",102,15000,100,true);`;
+  return runSqlScript(sql);
+}
+function updatePrepMonthlySummary(){
+  const sql = `CALL etl.generate_prep_monthly_report_v1_prod("sync",101,15000,100,true);`;
+  return runSqlScript(sql);
 }
 function updateCovidScreening(){
     const sql = `CALL etl.generate_flat_covid_screening_v1_0();`;
