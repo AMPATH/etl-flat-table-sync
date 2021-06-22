@@ -44,11 +44,15 @@ function queuePatients(){
 }
 
 function updateSummaries(){
-  return Promise.allSettled([
-    syncService.updateHivSummary(),
-    syncService.updateLabsAndImaging(),
-    syncService.updateFlatAppointment()]
-  );
+  return new Promise(async (resolve,reject) => {
+    await syncService.updateLabsAndImaging();
+    console.log('Done Labs and imaging....');
+    await syncService.updateHivSummary();
+    console.log('Done Hiv Summary....');
+    await syncService.updateFlatAppointment();
+    console.log('Done Flat Appointment....');
+    resolve('Done updateSummaries ...');
+  });
 }
 
 
