@@ -71,7 +71,6 @@ function nightlyUpdates(){
       await syncService.updateCovidScreening();
       await syncService.updatePrepSummary();
       await syncService.updatePrepMonthlySummary();
-      await syncService.checkHivMissingRecords();
       await syncService.runAmrsGarbageCollection();
       resolve('Done nightly updates ...');
 
