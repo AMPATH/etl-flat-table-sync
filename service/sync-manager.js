@@ -43,15 +43,20 @@ function queuePatients(){
  
 }
 
-function updateSummaries(){
-  return new Promise(async (resolve,reject) => {
-    await syncService.updateLabsAndImaging();
-    console.log('Done Labs and imaging....');
-    await syncService.updateHivSummary();
-    console.log('Done Hiv Summary....');
-    await syncService.updateFlatAppointment();
-    console.log('Done Flat Appointment....');
-    resolve('Done updateSummaries ...');
+function updateSummaries() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await syncService.updateLabsAndImaging();
+      console.log("Done Labs and imaging....");
+      await syncService.updateHivSummary();
+      console.log("Done Hiv Summary....");
+      await syncService.updateFlatAppointment();
+      console.log("Done Flat Appointment....");
+      resolve("Done updateSummaries ...");
+    } catch (e) {
+      console.log("Update Summaries Error..", e);
+      resolve("Update Summaries skipped after error..");
+    }
   });
 }
 
