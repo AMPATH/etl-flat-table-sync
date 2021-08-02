@@ -69,7 +69,7 @@ function updateBreastCancerScreening(){
   return runSqlScript(sql);
 }
 function updateCervicalScreening(){
-  const sql = `CALL etl.generate_flat_cervical_cancer_screening_v1_1("sync",1,5000,100);`
+  const sql = `CALL etl.generate_flat_cervical_cancer_screening_v1_2("sync",1,100000,1);`
   return runSqlScript(sql);
 }
 
@@ -134,7 +134,7 @@ function runAmrsGarbageCollection(){
   return new Promise((resolve,reject) => {
     const config = {
       method: 'get',
-      url: 'http://10.50.80.44:8080/amrs/monitoring?action=gc',
+      url: 'http://10.50.80.110:8080/amrs/monitoring?action=gc',
       headers: { 
         'Cookie': 'JSESSIONID=2C98A4699D4CF97C9B88CE45026F772C'
       }
@@ -149,7 +149,7 @@ function runAmrsGarbageCollection(){
     })
     .catch((error)=> {
       console.log('error',error);
-      resolve('AMRS Garbage Collection Successfull...');
+      resolve('AMRS Garbage Collection Failed...');
     });
 
   });

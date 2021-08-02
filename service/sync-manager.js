@@ -64,7 +64,7 @@ function updateSummaries() {
 function nightlyUpdates(){
   return new Promise(async (resolve,reject) => {
       await syncService.updateVitals();
-      await syncService.updateBreastCancerScreening();
+      // await syncService.updateBreastCancerScreening();
       await syncService.updateCervicalScreening();
       await syncService.updateOncologyHistory();
       await syncService.updatePepSummary();
