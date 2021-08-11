@@ -25,8 +25,12 @@ const def = {
   checkHivMissingRecords,
   runAmrsGarbageCollection,
   updatePrepSummary,
-  updatePrepMonthlySummary
-
+  updatePrepMonthlySummary,
+  updateHivCervicalCancerScreening,
+  updateHivCervicalCancerScreeningMonthlySummary,
+  updateHivTransferOutSummary,
+  updateFlatDeathReporting,
+  updateHIVTransferIns
 }
 
 function updateHivSummary(){
@@ -95,6 +99,30 @@ function updateCaseManager(){
 
 function updateFamilyTesting(){
   const sql = `CALL etl.generate_flat_family_testing("sync",1,15000,20,true);`
+  return runSqlScript(sql);
+}
+
+
+function updateHivCervicalCancerScreening(){
+  const sql = `CALL etl.generate_flat_cervical_cancer_screening_rc_v1_0("sync",1,100000,1);`
+  return runSqlScript(sql);
+}
+function updateHivCervicalCancerScreeningMonthlySummary(){
+  const sql = `CALL etl.generate_cervical_screening_monthly_report_v1_0("sync",1,10000,1,"2013-01-01");`
+  return runSqlScript(sql);
+}
+function updateHivTransferOutSummary(){
+  const sql = `CALL etl.generate_flat_transfers("sync",1,10000,1,"true");`
+  return runSqlScript(sql);
+}
+
+function updateFlatDeathReporting(){
+  const sql = `CALL etl.generate_flat_death_reporting("sync",1,10000,1,"true");`
+  return runSqlScript(sql);
+}
+
+function updateHIVTransferIns(){
+  const sql = `CALL etl.generate_flat_hiv_transfer_in("sync",1,10000,1,"true");`
   return runSqlScript(sql);
 }
 
