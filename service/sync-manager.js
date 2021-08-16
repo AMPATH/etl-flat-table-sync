@@ -71,7 +71,6 @@ function nightlyUpdates(){
       await syncService.updateHivTransferOutSummary();
       await syncService.updateFlatDeathReporting();
       await syncService.updateHIVTransferIns();
-      await syncService.updateOncologyHistory();
       await syncService.updatePepSummary();
       await syncService.updateDefaulters();
       await syncService.updateCaseManager();

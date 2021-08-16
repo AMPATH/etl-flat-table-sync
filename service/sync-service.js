@@ -12,7 +12,6 @@ const def = {
   updateVitals,
   updateBreastCancerScreening,
   updateCervicalScreening,
-  updateOncologyHistory,
   updatePepSummary,
   updateDefaulters,
   updateCaseManager,
@@ -77,10 +76,6 @@ function updateCervicalScreening(){
   return runSqlScript(sql);
 }
 
-function updateOncologyHistory(){ 
-  const sql = `CALL etl.generate_flat_onc_patient_history_v1_0("sync",1,500,100);`
-  return runSqlScript(sql);
-}
 
 function updatePepSummary(){
   const sql = `call generate_pep_summary();`
