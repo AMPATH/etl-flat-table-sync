@@ -22,7 +22,6 @@ const def = {
   updateSurgeWeeklyReport,
   updateCovidScreening,
   checkHivMissingRecords,
-  runAmrsGarbageCollection,
   updatePrepSummary,
   updatePrepMonthlySummary,
   updateHivCervicalCancerScreening,
@@ -152,32 +151,6 @@ function updateCovidScreening(){
 function checkHivMissingRecords(){
     const sql = `CALL etl.find_missing_hiv_summary_records();`;
     return runSqlScript(sql);
-}
-function runAmrsGarbageCollection(){
-  return new Promise((resolve,reject) => {
-    const config = {
-      method: 'get',
-      url: 'http://10.50.80.110:8080/amrs/monitoring?action=gc',
-      headers: { 
-        'Cookie': 'JSESSIONID=2C98A4699D4CF97C9B88CE45026F772C'
-      }
-    };
-
-    console.log('Hitting garbage collection endpoint..', config.url);
-
-    axios(config)
-    .then((response)=> {
-      console.log('Get response ..',response.status);
-      resolve('AMRS Garbage Collection Successfull...');
-    })
-    .catch((error)=> {
-      console.log('error',error);
-      resolve('AMRS Garbage Collection Failed...');
-    });
-
-  });
-
-
 }
 
 function runSqlScript(sqlQuery){
