@@ -63,8 +63,8 @@ function updateSummaries() {
 
 function nightlyUpdates(){
   return new Promise(async (resolve,reject) => {
+    try{
       await syncService.updateVitals();
-      // await syncService.updateBreastCancerScreening();
       await syncService.updateCervicalScreening();
       await syncService.updateHivCervicalCancerScreening();
       await syncService.updateHivCervicalCancerScreeningMonthlySummary();
@@ -80,7 +80,13 @@ function nightlyUpdates(){
       await syncService.updateCovidScreening();
       await syncService.updatePrepSummary();
       await syncService.updatePrepMonthlySummary();
+      await syncService.updateFlatCdmSummary();
       resolve('Done nightly updates ...');
+    } catch(e){
+      console.log("nightlyUpdates ERROR", e);
+      resolve("Update Summaries skipped after error..");
+
+    }
 
     
 

@@ -28,7 +28,8 @@ const def = {
   updateHivCervicalCancerScreeningMonthlySummary,
   updateHivTransferOutSummary,
   updateFlatDeathReporting,
-  updateHIVTransferIns
+  updateHIVTransferIns,
+  updateFlatCdmSummary
 }
 
 function updateHivSummary(){
@@ -147,6 +148,10 @@ function updatePrepMonthlySummary(){
 function updateCovidScreening(){
     const sql = `CALL etl.generate_flat_covid_screening_v1_0();`;
     return runSqlScript(sql);
+}
+function updateFlatCdmSummary(){
+  const sql = `CALL etl.generate_flat_cdm_v1_0("sync",100,10000,1);`;
+  return runSqlScript(sql);
 }
 function checkHivMissingRecords(){
     const sql = `CALL etl.find_missing_hiv_summary_records();`;
