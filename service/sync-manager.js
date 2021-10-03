@@ -12,8 +12,8 @@ const def = {
 
 function maintenance(){
   return new Promise(async (resolve,reject) => {
-      await syncService.startSlave();
-      await syncService.killIdleConnections();
+      // await syncService.startSlave();
+      // await syncService.killIdleConnections();
       resolve('Maintenance done ..');
 
   });
