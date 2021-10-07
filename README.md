@@ -15,6 +15,11 @@ This project is aimed at updating the etl flat tables
     "user": "<mysql user>",
     "password": "<mysql password>",
     "multipleStatements": true
+  },
+   "slackApi": {
+    "webhook": {
+       "url": "webhookurl"
+    }
   }
 }
 
