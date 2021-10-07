@@ -1,6 +1,7 @@
 'use strict';
 const queueService = require('./queue-service');
 const syncService = require('./sync-service');
+const slackService = require('./slack-service');
 
 const def = {
   syncBaseTables,
@@ -55,7 +56,15 @@ function updateSummaries() {
       resolve("Done updateSummaries ...");
     } catch (e) {
       console.log("Update Summaries Error..", e);
-      resolve("Update Summaries skipped after error..");
+      const defaultErrorMsg = 'Updating Summaries Failed encoutered an error';
+      const payload = {
+        "text": `ERROR : ${e.sqlMessage ? e.sqlMessage : defaultErrorMsg}`
+      };
+      slackService.postChannelMesssage(payload).then((res)=>{
+        resolve("Update Summaries skipped after error..");
+      }).catch((error)=>{
+        resolve(error);
+      });
     }
   });
 }
@@ -84,7 +93,15 @@ function nightlyUpdates(){
       resolve('Done nightly updates ...');
     } catch(e){
       console.log("nightlyUpdates ERROR", e);
-      resolve("Update Summaries skipped after error..");
+      const defaultErrorMsg = 'Nightly Failed encoutered an error';
+      const payload = {
+        "text": `ERROR : ${e.sqlMessage ? e.sqlMessage : defaultErrorMsg}`
+      };
+      slackService.postChannelMesssage(payload).then((res)=>{
+        resolve("Nightly Updates skipped after error..");
+      }).catch((error)=>{
+        resolve(error);
+      });
 
     }
 
