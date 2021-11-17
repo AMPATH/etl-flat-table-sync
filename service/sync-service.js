@@ -168,7 +168,13 @@ function runSqlScript(sqlQuery){
         pool.query(sql, function (error, results, fields) {
           if (error) {
             console.log("Error", error);
-            reject(error);
+            const errorPayload = {
+              'sqlQuery': sqlQuery,
+              'error': {
+                sqlMessage: error
+              }
+            };
+            reject(errorPayload);
           } else {
             console.log("Update successfull: ------------------------ ");
             resolve(results);
@@ -176,8 +182,12 @@ function runSqlScript(sqlQuery){
         });
       })
       .catch((error) => {
-        console.log('Error:', error);
-        reject(error);
+        console.log('runSqlScript Error:', error);
+        const errorPayload = {
+          'sqlQuery': sqlQuery,
+          'error': error
+        };
+        reject(errorPayload);
       });
   
     });

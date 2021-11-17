@@ -21,12 +21,34 @@ function maintenance(){
 
 }
 
-function syncBaseTables(){
-  return Promise.allSettled(
-    [syncService.updateFlatObs(),
-    syncService.updateFlatLabObs(),
-    syncService.updateFlatOrders()]
-    );
+async function syncBaseTables(){
+
+  return new Promise(async (resolve, reject) => {
+
+  try{
+    await syncService.updateFlatObs();
+    await syncService.updateFlatLabObs();
+    await syncService.updateFlatOrders();
+    resolve('syncBaseTables successfull');
+
+  }catch(e){
+      console.log("nightlyUpdates ERROR", e);
+      const defaultErrorMsg = 'Nightly Failed encoutered an error';
+      const payload = {
+        "text": `ERROR : ${e.error.sqlMessage ? e.error.sqlMessage : defaultErrorMsg} : Query : ${e.sqlQuery}`
+      };
+      slackService.postChannelMesssage(payload).then((res)=>{
+        reject("Nightly Updates skipped after error..");
+      }).catch((error)=>{
+        reject(error);
+      });
+     
+  }
+
+});
+
+ 
+  
 }
 
 function queuePatients(){
@@ -58,12 +80,12 @@ function updateSummaries() {
       console.log("Update Summaries Error..", e);
       const defaultErrorMsg = 'Updating Summaries Failed encoutered an error';
       const payload = {
-        "text": `ERROR : ${e.sqlMessage ? e.sqlMessage : defaultErrorMsg}`
+        "text": `ERROR : ${e.error.sqlMessage ? e.error.sqlMessage : defaultErrorMsg}: Query : ${e.sqlQuery}`
       };
       slackService.postChannelMesssage(payload).then((res)=>{
-        resolve("Update Summaries skipped after error..");
+        reject("Update Summaries skipped after error..");
       }).catch((error)=>{
-        resolve(error);
+        reject(error);
       });
     }
   });
@@ -95,12 +117,12 @@ function nightlyUpdates(){
       console.log("nightlyUpdates ERROR", e);
       const defaultErrorMsg = 'Nightly Failed encoutered an error';
       const payload = {
-        "text": `ERROR : ${e.sqlMessage ? e.sqlMessage : defaultErrorMsg}`
+        "text": `ERROR : ${e.error.sqlMessage ? e.errorsqlMessage : defaultErrorMsg} : Query : ${e.sqlQuery}`
       };
       slackService.postChannelMesssage(payload).then((res)=>{
-        resolve("Nightly Updates skipped after error..");
+        reject("Nightly Updates skipped after error..");
       }).catch((error)=>{
-        resolve(error);
+        reject(error);
       });
 
     }
