@@ -68,7 +68,7 @@ function updateVitals (){
 }
 
 function updateBreastCancerScreening(){
-  const sql = `CALL etl.generate_flat_breast_cancer_screening_v1_2("sync",1,5000,100);`
+  const sql = `CALL etl.generate_flat_breast_cancer_screening_v1_2("sync",1,15000,1);`
   return runSqlScript(sql);
 }
 function updateCervicalScreening(){

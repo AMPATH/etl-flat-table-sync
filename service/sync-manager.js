@@ -105,13 +105,14 @@ function nightlyUpdates(){
       await syncService.updatePepSummary();
       await syncService.updateDefaulters();
       await syncService.updateCaseManager();
-      await syncService.updateFamilyTesting();
       await syncService.updateHivMonthlySummary();
       await syncService.updateSurgeWeeklyReport();
       await syncService.updateCovidScreening();
       await syncService.updatePrepSummary();
       await syncService.updatePrepMonthlySummary();
       await syncService.updateFlatCdmSummary();
+      await syncService.updateBreastCancerScreening();
+      await syncService.updateFamilyTesting();
       resolve('Done nightly updates ...');
     } catch(e){
       console.log("nightlyUpdates ERROR", e);
