@@ -1,6 +1,7 @@
 'use strict';
 const connection = require('../connection/connection');
 const axios = require('axios');
+const moment = require('moment');
 
 const def = {
   updateHivSummary,
