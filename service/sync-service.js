@@ -129,7 +129,7 @@ function updateHIVTransferIns(){
 }
 
 function findMissingHivMonthlyRecords(){
-  const endMonth = moment().endOf('month')
+  const endMonth = moment().endOf('month').format("YYYY-DD-MM");
   const sql = `CALL etl.find_missing_hiv_monthly_records("${endMonth}");`
   return runSqlScript(sql);
 }
