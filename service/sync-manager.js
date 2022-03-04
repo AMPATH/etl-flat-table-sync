@@ -106,7 +106,14 @@ function nightlyUpdates(){
       await syncService.updateHIVTransferIns();
       await syncService.updatePepSummary();
       await syncService.updateDefaulters();
-      await syncService.updateCaseManager();
+      await syncService.updateCaseManager()
+      // add missing hiv summary records to hivsummary sync queue;
+      await syncService.checkHivMissingRecords();
+      // update summaries for all the patients with missing summaries
+      await syncService.batchUpdateHivSummary();
+      await syncService.updateHivMonthlySummary();
+      await syncService.findMissingHivMonthlyRecords();
+      // update monthly again after the monthly check
       await syncService.updateHivMonthlySummary();
       await syncService.updateSurgeWeeklyReport();
       await syncService.updateCovidScreening();

@@ -4,6 +4,7 @@ const axios = require('axios');
 
 const def = {
   updateHivSummary,
+  batchUpdateHivSummary,
   updateFlatAppointment,
   updateFlatObs,
   updateFlatLabObs,
@@ -16,6 +17,7 @@ const def = {
   updateDefaulters,
   updateCaseManager,
   updateFamilyTesting,
+  findMissingHivMonthlyRecords,
   updateHivMonthlySummary,
   startSlave,
   killIdleConnections,
@@ -34,6 +36,11 @@ const def = {
 
 function updateHivSummary(){
   const sql = `call build_flat_hiv_summary("build",700,100,1);`;
+  return runSqlScript(sql);  
+}
+
+function batchUpdateHivSummary(){
+  const sql = `call build_flat_hiv_summary("build",800,10000,1);`;
   return runSqlScript(sql);  
 }
 
@@ -118,6 +125,12 @@ function updateFlatDeathReporting(){
 
 function updateHIVTransferIns(){
   const sql = `CALL etl.generate_flat_hiv_transfer_in("sync",1,10000,1,"true");`
+  return runSqlScript(sql);
+}
+
+function findMissingHivMonthlyRecords(){
+  const endMonth = moment().endOf('month')
+  const sql = `CALL etl.find_missing_hiv_monthly_records("${endMonth}");`
   return runSqlScript(sql);
 }
 
