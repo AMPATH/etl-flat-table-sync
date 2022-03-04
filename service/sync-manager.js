@@ -75,6 +75,8 @@ function updateSummaries() {
       console.log("Done Hiv Summary....");
       await syncService.updateFlatAppointment();
       console.log("Done Flat Appointment....");
+      await syncService.updateDefaulters();
+      console.log("Done Flat Defaulters....");
       resolve("Done updateSummaries ...");
     } catch (e) {
       console.log("Update Summaries Error..", e);
