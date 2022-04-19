@@ -3,7 +3,8 @@ const connection = require('../connection/connection');
 
 const def = {
   generateHivSummarySyncQueue,
-  generateFlatAppointmentSyncQueue
+  generateFlatAppointmentSyncQueue,
+  generateSurgeDailySyncQueue
 }
 
 function generateHivSummarySyncQueue(){
@@ -53,6 +54,33 @@ function generateFlatAppointmentSyncQueue(){
     })
     .catch((error) => {
       console.log('Error: generateFlatAppointmentSyncQueue', error);
+      reject(error);
+    });
+
+  });
+  
+}
+
+function generateSurgeDailySyncQueue(){
+
+  return new Promise((resolve,reject) => {
+  const sql = `call etl.generate_surge_daily_report_sync_queue();`;
+  console.log("sql", sql);
+  connection
+    .getConnectionPool()
+    .then((pool) => {
+      pool.query(sql, function (error, results, fields) {
+        if (error) {
+          console.log("Error", error);
+          reject(error);
+        } else {
+          console.log("Generate Surge Sync Queue successfull: ", results);
+          resolve(results);
+        }
+      });
+    })
+    .catch((error) => {
+      console.log('Error: generateSurgeDailySyncQueue', error);
       reject(error);
     });
 

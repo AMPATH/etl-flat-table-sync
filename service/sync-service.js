@@ -32,7 +32,8 @@ const def = {
   updateHivTransferOutSummary,
   updateFlatDeathReporting,
   updateHIVTransferIns,
-  updateFlatCdmSummary
+  updateFlatCdmSummary,
+  updateSurgeDailyDataset
 }
 
 function updateHivSummary(){
@@ -148,7 +149,7 @@ function killIdleConnections(){
   return runSqlScript(sql);
 }
 function updateSurgeWeeklyReport(){
-    const sql = `call etl.generate_surge_weekly_report_dataset_v1("sync",10,15000,100,true);`
+    const sql = `call etl.generate_surge_weekly_report_dataset_v1("sync",10,15000,100,true);`;
     return runSqlScript(sql);
 }
 function updatePrepSummary(){
@@ -169,6 +170,10 @@ function updateFlatCdmSummary(){
 }
 function checkHivMissingRecords(){
     const sql = `CALL etl.find_missing_hiv_summary_records();`;
+    return runSqlScript(sql);
+}
+function updateSurgeDailyDataset(){
+    const sql = `call etl.generate_surge_daily_report_dataset_rri_v1_0("sync",880,5,1,false);`;
     return runSqlScript(sql);
 }
 

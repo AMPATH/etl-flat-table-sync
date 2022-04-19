@@ -55,6 +55,7 @@ function queuePatients(){
   return new Promise((resolve,reject) => {
       const queues = [queueService.generateHivSummarySyncQueue(),
         queueService.generateFlatAppointmentSyncQueue(),
+        queueService.generateSurgeDailySyncQueue()
         ];
       
       queues.forEach(async (queue,index) => {
@@ -77,6 +78,8 @@ function updateSummaries() {
       console.log("Done Flat Appointment....");
       await syncService.updateDefaulters();
       console.log("Done Flat Defaulters....");
+      await syncService.updateSurgeDailyDataset();
+      console.log("Done Surge Daily Dataset....");
       resolve("Done updateSummaries ...");
     } catch (e) {
       console.log("Update Summaries Error..", e);
