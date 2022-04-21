@@ -173,7 +173,15 @@ function checkHivMissingRecords(){
     return runSqlScript(sql);
 }
 function updateSurgeDailyDataset(){
-    const sql = `call etl.generate_surge_daily_report_dataset_rri_v1_0("sync",880,100,1,false);`;
+    const NOW = moment().format('HH');
+    let queueSize = 1;
+    if(NOW >= 7 && NOW < 17){
+       queueSize = 5;
+    }else{
+       queueSize = 100;
+    }
+   
+    const sql = `call etl.generate_surge_daily_report_dataset_rri_v1_0("sync",880,${queueSize},1,false);`;
     return runSqlScript(sql);
 }
 
