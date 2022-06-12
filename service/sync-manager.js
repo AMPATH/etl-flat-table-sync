@@ -73,6 +73,8 @@ function updateSummaries() {
     try {
       await syncService.updateLabsAndImaging();
       console.log("Done Labs and imaging....");
+      await syncService.updateCovidExtractSummary();
+      console.log("Done Covid Exatract Summary....");
       await syncService.updateHivSummary();
       console.log("Done Hiv Summary....");
       await syncService.updateFlatAppointment();
