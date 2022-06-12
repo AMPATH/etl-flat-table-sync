@@ -186,7 +186,7 @@ function updateSurgeDailyDataset(){
     return runSqlScript(sql);
 }
 function updateCovidExtractSummary(){
-  const sql = `CALL ndwr.build_NDWR_covid_extract("build",100,100,1,true);`;
+  const sql = `CALL etl.generate_flat_covid_extract("sync",100,100,1,1);`;
   return runSqlScript(sql);
 }
 

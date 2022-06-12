@@ -92,7 +92,7 @@ function generateSurgeDailySyncQueue(){
 function generateCovidExtractSyncQueue(){
 
   return new Promise((resolve,reject) => {
-    const sql = `CALL ndwr.generate_flat_covid_extract_sync_queue();`;
+    const sql = `CALL etl.generate_flat_covid_extract_sync_queue();`;
     console.log("sql", sql);
     connection
       .getConnectionPool()
