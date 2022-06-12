@@ -33,7 +33,8 @@ const def = {
   updateFlatDeathReporting,
   updateHIVTransferIns,
   updateFlatCdmSummary,
-  updateSurgeDailyDataset
+  updateSurgeDailyDataset,
+  updateCovidExtractSummary
 }
 
 function updateHivSummary(){
@@ -183,6 +184,10 @@ function updateSurgeDailyDataset(){
    
     const sql = `call etl.generate_surge_daily_report_dataset_rri_v1_0("sync",880,${queueSize},1,false);`;
     return runSqlScript(sql);
+}
+function updateCovidExtractSummary(){
+  const sql = `CALL ndwr.build_NDWR_covid_extract("build",100,100,1,true);`;
+  return runSqlScript(sql);
 }
 
 function runSqlScript(sqlQuery){

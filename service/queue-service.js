@@ -4,7 +4,8 @@ const connection = require('../connection/connection');
 const def = {
   generateHivSummarySyncQueue,
   generateFlatAppointmentSyncQueue,
-  generateSurgeDailySyncQueue
+  generateSurgeDailySyncQueue,
+  generateCovidExtractSyncQueue
 }
 
 function generateHivSummarySyncQueue(){
@@ -86,6 +87,33 @@ function generateSurgeDailySyncQueue(){
 
   });
   
+}
+
+function generateCovidExtractSyncQueue(){
+
+  return new Promise((resolve,reject) => {
+    const sql = `CALL ndwr.generate_flat_covid_extract_sync_queue();`;
+    console.log("sql", sql);
+    connection
+      .getConnectionPool()
+      .then((pool) => {
+        pool.query(sql, function (error, results, fields) {
+          if (error) {
+            console.log("Error", error);
+            reject(error);
+          } else {
+            console.log("Generate Covid Exatrct Sync Queue successfull: ", results);
+            resolve(results);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log('Error: generateCovidExtractSyncQueue', error);
+        reject(error);
+      });
+  
+    });
+
 }
 
 module.exports = def;

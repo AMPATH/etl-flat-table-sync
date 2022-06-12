@@ -55,6 +55,7 @@ function queuePatients(){
   return new Promise((resolve,reject) => {
       const queues = [queueService.generateHivSummarySyncQueue(),
         queueService.generateFlatAppointmentSyncQueue(),
+        queueService.generateCovidExtractSyncQueue(),
         queueService.generateSurgeDailySyncQueue()
         ];
       
