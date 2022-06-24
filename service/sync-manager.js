@@ -107,6 +107,7 @@ function nightlyUpdates(){
       await syncService.updateCervicalScreening();
       await syncService.updateHivCervicalCancerScreening();
       await syncService.updateHivCervicalCancerScreeningMonthlySummary();
+      await syncService.updateCovidMonthlySummary();
       await syncService.updateHivTransferOutSummary();
       await syncService.updateFlatDeathReporting();
       await syncService.updateHIVTransferIns();
