@@ -81,6 +81,8 @@ function updateSummaries() {
       console.log("Done Flat Appointment....");
       // await syncService.updateDefaulters();
       // console.log("Done Flat Defaulters....");
+      await syncService.updateFlatConsent();
+      console.log("Done Flat Consent....");
       await syncService.updateSurgeDailyDataset();
       console.log("Done Surge Daily Dataset....");
       resolve("Done updateSummaries ...");

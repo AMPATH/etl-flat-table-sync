@@ -35,7 +35,8 @@ const def = {
   updateFlatCdmSummary,
   updateSurgeDailyDataset,
   updateCovidExtractSummary,
-  updateCovidMonthlySummary
+  updateCovidMonthlySummary,
+  updateFlatConsent
 }
 
 function updateHivSummary(){
@@ -192,6 +193,10 @@ function updateCovidExtractSummary(){
 }
 function updateCovidMonthlySummary(){
   const sql = `CALL etl.generate_monthly_covid_extract_report("sync",1,100000,1,"2013-01-01");`;
+  return runSqlScript(sql);
+}
+function updateFlatConsent(){
+  const sql = `CALL etl.generate_flat_consent("sync",1,1000,1,"true");`;
   return runSqlScript(sql);
 }
 
