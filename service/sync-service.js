@@ -179,7 +179,7 @@ function updateSurgeDailyDataset(){
     const NOW = moment().format('HH');
     let queueSize = 1;
     if(NOW >= 7 && NOW < 17){
-       queueSize = 5;
+       queueSize = 1;
     }else{
        queueSize = 100;
     }
