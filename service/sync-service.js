@@ -50,7 +50,7 @@ function batchUpdateHivSummary(){
 }
 
 function updateFlatAppointment(){
-  const sql = `call etl.build_flat_appointment("build",700,10,1);`;
+  const sql = `call etl.build_flat_appointment("build",700,100,1);`;
   return runSqlScript(sql);    
 }
 
