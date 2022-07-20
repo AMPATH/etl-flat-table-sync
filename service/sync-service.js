@@ -40,7 +40,7 @@ const def = {
 }
 
 function updateHivSummary(){
-  const sql = `call build_flat_hiv_summary("build",700,50,1);`;
+  const sql = `call build_flat_hiv_summary("build",700,10,1);`;
   return runSqlScript(sql);  
 }
 
@@ -50,7 +50,7 @@ function batchUpdateHivSummary(){
 }
 
 function updateFlatAppointment(){
-  const sql = `call etl.build_flat_appointment("build",700,50,1);`;
+  const sql = `call etl.build_flat_appointment("build",700,10,1);`;
   return runSqlScript(sql);    
 }
 
