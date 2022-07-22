@@ -79,6 +79,8 @@ function updateSummaries() {
       console.log("Done Hiv Summary....");
       await syncService.updateFlatAppointment();
       console.log("Done Flat Appointment....");
+      await syncService.updateHivSummary();
+      console.log("Done Hiv Summary 2....");
       // await syncService.updateDefaulters();
       // console.log("Done Flat Defaulters....");
       await syncService.updateFlatConsent();
