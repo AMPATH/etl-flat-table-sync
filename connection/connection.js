@@ -3,7 +3,7 @@ const config = require('../conf/config');
 // Create connection
 
 const def = {
-  getConnectionPool: getConnectionPool
+  getConnectionPool: getConnectionPool,
 };
 
 const pool = mysql.createPool({
@@ -12,15 +12,13 @@ const pool = mysql.createPool({
   password: config.mysql.password,
   database: config.mysql.database,
   port: config.mysql.port,
-  connectionLimit: config.mysql.connectionLimit
+  connectionLimit: config.mysql.connectionLimit,
 });
 
-function getConnectionPool(){
-  return new Promise((resolve,reject) => {
-      resolve(pool);
-
+function getConnectionPool() {
+  return new Promise((resolve, reject) => {
+    resolve(pool);
   });
-
 }
 
 module.exports = def;

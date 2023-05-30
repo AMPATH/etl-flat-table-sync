@@ -1,23 +1,23 @@
-"use strict";
-const axios = require("axios");
-const conf = require("../conf/config");
+'use strict';
+const axios = require('axios');
+const conf = require('../conf/config');
 
 const serviceDef = {
-  postChannelMesssage
+  postChannelMesssage,
 };
 
 function postChannelMesssage(payload) {
   return new Promise((resolve, reject) => {
-    if (payload === "" || payload === null) {
-      reject("Cannot send Empty Message");
+    if (payload === '' || payload === null) {
+      reject('Cannot send Empty Message');
     }
 
     const data = JSON.stringify(payload);
     const config = {
-      method: "post",
+      method: 'post',
       url: conf.slackApi.webhook.url,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data: data,
     };
