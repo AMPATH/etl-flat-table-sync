@@ -1,0 +1,25 @@
+{
+  "mysql": {
+    "connectionLimit": 10,
+    "host": "0.0.0.0",
+    "port": "3306",
+    "user": "user",
+    "password": "pass#123",
+    "database": "db",
+    "multipleStatements": true
+  },
+  "slackApi": {
+    "webhook": {
+      "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  },
+  "jobs": {
+    "day": [
+        {
+            "name": "Build HIV Summary",
+            "procedure": "CALL build_flat_hiv_summary('build',700,25,1);"
+        }
+    ],
+    "night": []
+  }
+}
