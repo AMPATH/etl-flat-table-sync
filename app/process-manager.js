@@ -7,7 +7,7 @@ const moment = require('moment');
 const syncFlatTables = async (time) => {
   try {
     // Read the JSON config file
-    const config = JSON.parse(fs.readFileSync('./conf/config.json', 'utf8'));
+    const config = JSON.parse(fs.readFileSync('./conf/sync-jobs.json', 'utf8'));
 
     // Validate the config structure
     if (!config || !config.jobs || !config.jobs.day || !config.jobs.night) {
@@ -50,8 +50,8 @@ const processJobs = async (jobs, time) => {
       }
 
       // Perform the job task
-      console.log(`${moment().format('YYYY-MM-DD HH:mm:ss')}: Processing ${time} job >> ${job.name}`);
-      console.log(`${moment().format('YYYY-MM-DD HH:mm:ss')}: Priority: ${job.priority} Enabled: ${job.isEnabled}`);
+      console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Processing ${time} job >> ${job.name}`);
+      console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Priority: ${job.priority} Enabled: ${job.isEnabled}`);
       await runStoredProc(job.procedure);
 
       // Process the child jobs recursively
