@@ -11,7 +11,7 @@ const syncFlatTables = async (time) => {
 
     // Validate the config structure
     if (!config || !config.jobs || !config.jobs.day || !config.jobs.night) {
-      throw new Error('Invalid config structure');
+      throw new Error(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Invalid config structure`);
     }
 
     if (time && time === 'day') {
@@ -22,7 +22,7 @@ const syncFlatTables = async (time) => {
       await processJobs(config.jobs.night, 'night');
     }
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Error >>`, error.message);
   }
 };
 
@@ -41,11 +41,11 @@ const processJobs = async (jobs, time) => {
     try {
       // Validate the job properties
       if (!job.name || !job.procedure || !job.priority) {
-        throw new Error(`Invalid << ${job.name} >> job structure`);
+        throw new Error(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Invalid << ${job.name} >> job structure`);
       }
 
       if (!job.isEnabled) {
-        console.log(`Skipping ${time} job: ${job.name}`);
+        console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Skipping ${time} job: ${job.name}`);
         continue;
       }
 
@@ -59,7 +59,7 @@ const processJobs = async (jobs, time) => {
         processJobs(job.children, time);
       }
     } catch (error) {
-      console.error('Error processing job:', error.message);
+      console.error(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Error processing job:`, error.message);
     }
   }
 };
