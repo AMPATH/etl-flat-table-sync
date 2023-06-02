@@ -12,14 +12,5 @@
     "webhook": {
       "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
     }
-  },
-  "jobs": {
-    "day": [
-        {
-            "name": "Build HIV Summary",
-            "procedure": "CALL build_flat_hiv_summary('build',700,25,1);"
-        }
-    ],
-    "night": []
   }
 }

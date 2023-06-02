@@ -38,6 +38,6 @@ This project is aimed at updating the etl flat tables
 
 ## Building and deployment
 
-`docker build -f Dockerfile -t ampathke/etl-flat-table-sync:<version> .`
+`docker build -f docker/Dockerfile -t ampathke/etl-flat-table-sync:<tag-version> .`
 
 `docker run -d --restart unless-stopped --name etl-flat-table-sync --mount type=bind,source="/opt/etl-flat-table-sync",target="/usr/src/app/conf" ampathke/etl-flat-table-sync:<version> `
