@@ -7,14 +7,14 @@ const { syncFlatTables } = require('./process-manager');
 
 const dayTimeSync = async () => {
   console.log(
-    moment().format('YYYY-MM-DD HH:mm:ss') + ': Day time sync process started'
+    '➡️' + moment().format('YYYY-MM-DD HH:mm:ss') + ': Day time sync process started'
   );
   await syncBaseTables()
     .then(async (res) => {
       if (res) {
         console.log(
-          moment().format('YYYY-MM-DD HH:mm:ss') +
-            ': Base tables sync process completed'
+          `✅ ${moment().format('YYYY-MM-DD HH:mm:ss')} +
+            : Base tables sync process completed`
         );
         await syncFlatTables('day');
         console.log(
@@ -27,7 +27,7 @@ const dayTimeSync = async () => {
       }
     })
     .catch((error) => {
-      console.error('Error syncing base tables:', error);
+      console.error('❌ Error syncing base tables:', error);
       setTimeout(() => {
         this.startSync();
       }, TIMEOUT_INTERVAL);
@@ -39,13 +39,13 @@ const nightTimeSync = async () => {
     .then(async (res) => {
       if (res) {
         console.log(
-          moment().format('YYYY-MM-DD HH:mm:ss') +
-            ': Base tables sync process completed'
+          `✅ ${moment().format('YYYY-MM-DD HH:mm:ss')} 
+            : Base tables sync process completed`
         );
         await syncFlatTables('night');
         console.log(
-          moment().format('YYYY-MM-DD HH:mm:ss') +
-            ': Night time sync process completed'
+         `✅ ${moment().format('YYYY-MM-DD HH:mm:ss')} 
+            : Night time sync process completed`
         );
 
         setTimeout(async () => {

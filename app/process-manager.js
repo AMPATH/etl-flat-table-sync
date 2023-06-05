@@ -41,18 +41,18 @@ const processJobs = async (jobs, time) => {
     try {
       // Validate the job properties
       if (!job.name || !job.procedure || !job.priority) {
-        throw new Error(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Invalid << ${job.name} >> job structure`);
+        throw new Error(`❌ [${moment().format('YYYY-MM-DD HH:mm:ss')}]: Invalid << ${job.name} >> job structure`);
       }
 
       if (!job.isEnabled) {
-        console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Skipping ${time} job: ${job.name}`);
+        console.log(`⏭️ [${moment().format('YYYY-MM-DD HH:mm:ss')}]: Skipping ${time} job: ${job.name}`);
         continue;
       }
 
       // Perform the job task
-      console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Processing ${time} job >> ${job.name}`);
-      console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]: Priority: ${job.priority} Enabled: ${job.isEnabled}`);
-      await runStoredProc(job.procedure);
+      console.log(`📌 [${moment().format('YYYY-MM-DD HH:mm:ss')}]: Processing ${time} job >> ${job.name}`);
+      console.log(`📌 [${moment().format('YYYY-MM-DD HH:mm:ss')}]: Priority: ${job.priority} Enabled: ${job.isEnabled}`);
+      await runStoredProc({procedure: job.procedure, name: job.name});
 
       // Process the child jobs recursively
       if (job.children && job.children.length > 0) {
