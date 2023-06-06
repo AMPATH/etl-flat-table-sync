@@ -1,5 +1,5 @@
-# ETL Flat Table Sync
-
+# ETL Sync Service
+ 
 This project is aimed at updating the etl flat tables
 
 ## Project set up
