@@ -191,7 +191,7 @@
         "children": []
       },
       {
-        "name": "",
+        "name": "Update HIV Monthly Summary Dataset",
         "procedure": "CALL etl.generate_hiv_monthly_report_dataset_v1_4('sync',1,100000,100,'2013-01-01');",
         "priority": 15,
         "isEnabled": true,
