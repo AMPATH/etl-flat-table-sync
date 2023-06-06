@@ -5,8 +5,29 @@ const { connectionPool } = require('../app/conn/connection');
 const { postToSlack } = require('../app/service/slack.service');
 
 // Mock the dependencies
-jest.mock('../app/conn/connection');
-jest.mock('../app/service/slack.service');
+jest.mock('../app/conn/connection', () => {
+  const mockConnection = {
+    query: jest.fn((procedure, callback) => {
+      callback(null /* mocked results */);
+    }),
+    release: jest.fn(),
+  };
+
+  return {
+    connectionPool: {
+      getConnection: jest.fn((callback) => {
+        callback(null, mockConnection);
+      }),
+    },
+  };
+});
+
+// Mock the Slack service module
+jest.mock('../app/service/slack.service', () => {
+  return {
+    postToSlack: jest.fn(),
+  };
+});
 
 describe('runStoredProc', () => {
   beforeEach(() => {
@@ -16,7 +37,9 @@ describe('runStoredProc', () => {
 
   it('should run the stored procedure and resolve with the results', async () => {
     const mockProcedure = 'CALL flat_table_sync();';
-    const mockResults = [/* mocked results */];
+    const mockResults = [
+      /* mocked results */
+    ];
     const mockConnection = {
       query: jest.fn((procedure, callback) => {
         callback(null, mockResults);
@@ -30,7 +53,10 @@ describe('runStoredProc', () => {
     const result = await runStoredProc({ procedure: mockProcedure });
 
     expect(connectionPool.getConnection).toHaveBeenCalledTimes(1);
-    expect(mockConnection.query).toHaveBeenCalledWith(mockProcedure, expect.any(Function));
+    expect(mockConnection.query).toHaveBeenCalledWith(
+      mockProcedure,
+      expect.any(Function)
+    );
     expect(mockConnection.release).toHaveBeenCalledTimes(1);
     expect(result).toEqual(mockResults);
   });
@@ -41,7 +67,9 @@ describe('runStoredProc', () => {
       callback(mockError);
     });
 
-    await expect(runStoredProc({ procedure: 'CALL flat_table_sync();' })).rejects.toThrowError(mockError);
+    await expect(
+      runStoredProc({ procedure: 'CALL flat_table_sync();' })
+    ).rejects.toThrowError(mockError);
     expect(connectionPool.getConnection).toHaveBeenCalledTimes(1);
     expect(postToSlack).not.toHaveBeenCalled();
   });
@@ -59,9 +87,13 @@ describe('runStoredProc', () => {
       callback(null, mockConnection);
     });
 
-    await expect(runStoredProc({ procedure: mockProcedure })).rejects.toThrowError(mockError);
+    await expect(
+      runStoredProc({ procedure: mockProcedure })
+    ).rejects.toThrowError(mockError);
     expect(connectionPool.getConnection).toHaveBeenCalledTimes(1);
     expect(postToSlack).toHaveBeenCalledTimes(1);
-    expect(postToSlack).toHaveBeenCalledWith(expect.stringContaining(mockProcedure));
+    expect(postToSlack).toHaveBeenCalledWith(
+      expect.stringContaining(mockProcedure)
+    );
   });
 });
