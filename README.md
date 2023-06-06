@@ -1,4 +1,5 @@
 # ETL Sync Service
+[![Node.js CI](https://github.com/AMPATH/etl-flat-table-sync/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/AMPATH/etl-flat-table-sync/actions/workflows/node.js.yml)
  
 ETL Sync Service enables seamless synchronization of data between AMRS DB and ETL Flat tables, ensuring data consistency and integrity.
 
