@@ -254,14 +254,14 @@
         "children": []
       },
       {
-        "name": "Update Prediction Model's Baseline Visits"
+        "name": "Update Prediction Model's Baseline Visits",
         "procedure": "CALL predictions.generate_flat_ml_baseline_visit();",
         "priority": 30,
         "isEnabled": true,
         "children": []
       },
       {
-        "name": "Update Prediction Model's Days Defaulted"
+        "name": "Update Prediction Model's Days Defaulted",
         "procedure": "CALL predictions.generate_flat_ml_days_defaulted();",
         "priority": 30,
         "isEnabled": true,
