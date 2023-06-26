@@ -254,6 +254,13 @@
         "children": []
       },
       {
+        "name": "Update Predictions with Return dates",
+        "procedure": "CALL etl.add_observed_appointments_to_ml_predictions_v1_0();",
+        "priority": 29,
+        "isEnabled": true,
+        "children": []
+      },
+      {
         "name": "Update Prediction Model's Baseline Visits",
         "procedure": "CALL predictions.generate_flat_ml_baseline_visit();",
         "priority": 30,
