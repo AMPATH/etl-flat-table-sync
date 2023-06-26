@@ -13,41 +13,34 @@ The repository is organized as follows:
    - *tests/*: Contains the test cases to verify the functionality of the service.
    - *conf/*: Includes configuration files required for the service.
    - *docker/*: Contains docker files.
-    
-## Project set up
 
-1. Fork the project
-2. Clone the project
-3. Create a conf folder in the root directory with config.json file with the following configuration
+## JSON Sync jobs configuration
+The JSON configuration provided [here](https://github.com/AMPATH/etl-flat-table-sync/blob/main/conf/sync-jobs.json) is used to define a set of jobs that can be executed as part of an ETL process. The configurations consist of two main sections: **jobs** and **children**. Each job represents a specific task to be performed and can have child jobs nested within it.
 
-```json
+### Structure
+The JSON configuration has the following structure:
+```javascript
 {
-  "mysql": {
-    "connectionLimit": 5,
-    "host": "The IP or hostname of the  mysql server",
-    "port": "<mysql port>",
-    "user": "<mysql user>",
-    "password": "<mysql password>",
-    "multipleStatements": true
-  },
-  "slackApi": {
-    "webhook": {
-      "url": "webhookurl"
-    }
+  "jobs": {
+    "day": [ ... ],
+    "night": [ ... ]
   }
 }
 ```
-
-## Getting started
-
-`npm install`
-`npm start`
+- **jobs**: The main object that contains the job definitions.
+- **day** and **night**: Two categories of jobs representing tasks to be executed during the day and night, respectively. Each category contains an array of job objects.
 
 ## Building and deployment
 
-`docker build -f docker/Dockerfile -t ampathke/etl-flat-table-sync:<tag-version> .`
+Docker build
+```bash
+docker build -f docker/Dockerfile -t ampathke/etl-flat-table-sync:<tag-version> .
+```
+Docker run/start the service
 
-`docker run -d --restart unless-stopped --name etl-flat-table-sync --mount type=bind,source="/opt/etl-flat-table-sync",target="/usr/src/app/conf" ampathke/etl-flat-table-sync:<version> `
+```shell
+docker run -d --restart unless-stopped --name etl-flat-table-sync --mount type=bind,source="/opt/etl-flat-table-sync",target="/usr/src/app/conf" ampathke/etl-flat-table-sync:<version> 
+```
 ## Integration with Slack
 The service integrates with Slack to provide real-time notifications and alerts for successful completions, failures, and other important events.
 ## Contributions
