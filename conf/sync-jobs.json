@@ -20,7 +20,7 @@
         "name": "Generate Appointments Queue",
         "procedure": "CALL generate_flat_appointment_sync_queue();",
         "priority": 2,
-        "isEnabled": false,
+        "isEnabled": true,
         "children": [
           {
             "name": "Update Appointments",
