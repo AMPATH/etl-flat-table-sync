@@ -30,6 +30,59 @@ The JSON configuration has the following structure:
 - **jobs**: The main object that contains the job definitions.
 - **day** and **night**: Two categories of jobs representing tasks to be executed during the day and night, respectively. Each category contains an array of job objects.
 
+### Job Object
+A job object represents a specific task and contains the following properties:
+
+- **name** (string): The name or description of the job.
+- **procedure** (string): The procedure or function to be executed as part of the job.
+- **priority** (integer): The priority of the job. Jobs with lower priority values are executed first.
+- **isEnabled** (boolean): Indicates whether the job is enabled or disabled. Disabled jobs are not executed.
+- **children** (array): An optional array of child job objects nested within the current job. Children's jobs are executed after the parent's job completes.
+
+#### Example
+Here's an example of a job object
+```javascript
+{
+  "name": "Generate HIV Summary Queue",
+  "procedure": "CALL etl.generate_flat_hiv_summary_sync_queue();",
+  "priority": 1,
+  "isEnabled": true,
+  "children": [ ... ]
+}
+```
+### Child Jobs
+Some jobs can have child jobs nested within them. Child jobs follow the same structure as the parent jobs and represent subtasks to be executed after the parent job completes. Child jobs are defined within the children's array of job objects.
+
+#### Example
+Here's an example of a job object with child jobs:
+```javascript
+{
+  "name": "Generate HIV Summary Queue",
+  "procedure": "CALL etl.generate_flat_hiv_summary_sync_queue();",
+  "priority": 1,
+  "isEnabled": true,
+  "children": [
+    {
+      "name": "Update HIV Summary",
+      "procedure": "CALL etl.build_flat_hiv_summary('build',700,25,1);",
+      "priority": 2,
+      "isEnabled": true,
+      "children": []
+    },
+    ...
+  ]
+}
+```
+
+### Usage
+The JSON configuration is used to execute the defined jobs in a specific order based on their priority and dependencies. The process should iterate over the job categories (`"day"` and `"night"`) and execute the jobs in the given order.
+
+For each job, the ETL process should perform the following steps:
+
+1. Check the `"isEnabled"` property of the job. If it is set to `"false"`, skip the job and proceed to the next one.
+2. Execute the procedure specified in the `"procedure"` property of the job.
+3. If the job has child jobs (`"children"` array is not empty), recursively execute each child job following the same steps.
+
 ## Building and deployment
 
 Docker build
