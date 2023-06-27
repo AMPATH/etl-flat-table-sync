@@ -248,8 +248,8 @@
       },
       {
         "name": "Update DC report",
-        "procedure": "CALL etl.generate_flat_breast_cancer_screening_v1_2('sync',1,15000,1);",
-        "priority": 22,
+        "procedure": "CALL etl.generate_dc_monthly_report_dataset_vl('sync', 233, 5000, 1, true);",
+        "priority": 23,
         "isEnabled": true,
         "children": []
       },
