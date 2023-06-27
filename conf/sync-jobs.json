@@ -255,7 +255,7 @@
       },
       {
         "name": "Update Predictions with Return dates",
-        "procedure": "CALL etl.add_observed_appointments_to_ml_predictions_v1_0();",
+        "procedure": "CALL predictions.add_observed_appointments_to_ml_predictions_v1_0();",
         "priority": 29,
         "isEnabled": true,
         "children": []
