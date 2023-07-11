@@ -76,6 +76,13 @@
         "children": []
       },
       {
+        "name": "Update Pre Appointment Outreach Summary",
+        "procedure": "CALL etl.generate_pre_appointment_summary('sync', 900, 25, 1, true);",
+        "priority": 7,
+        "isEnabled": true,
+        "children": []
+      },
+      {
         "name": "Update HIV Summary 2(second cycle)",
         "procedure": "CALL build_flat_hiv_summary('build',700,25,1);",
         "priority": 8,
