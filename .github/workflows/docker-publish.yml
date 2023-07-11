@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          dockerile: docker/Dockerfile
+          dockerfile: docker/Dockerfile
           push: true
           tags: ampathke/etl-flat-table-sync:latest
