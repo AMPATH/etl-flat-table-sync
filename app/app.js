@@ -1,6 +1,6 @@
 'use strict';
 const moment = require('moment');
-const TIMEOUT_INTERVAL = 30 * 1000; // 60 seconds
+const TIMEOUT_INTERVAL = 3 * 1000; // 3 seconds
 
 const { syncBaseTables } = require('./base-sync');
 const { syncFlatTables } = require('./process-manager');
