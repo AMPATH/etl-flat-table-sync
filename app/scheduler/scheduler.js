@@ -8,6 +8,7 @@ const tasks = JSON.parse(fs.readFileSync(tasksFile, 'utf8'));
 
 // Function to execute a Node.js script
 const executeScript = (script) => {
+  const startTime = new Date();
   const child = spawn('node', [script]);
 
   child.stdout.on('data', (data) => {
@@ -19,7 +20,11 @@ const executeScript = (script) => {
   });
 
   child.on('close', (code) => {
-    console.log(`🔰 [${script}] exited with code ${code}`);
+    const endTime = new Date();
+    const executionTime = (endTime - startTime) / 1000; // in seconds
+    console.log(
+      `🔰 [${script}] exited with code ${code}. Execution time: ${executionTime} seconds.`
+    );
   });
 };
 
