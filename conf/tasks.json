@@ -1,0 +1,7 @@
+[
+  {
+    "script": "./tasks/sample.js",
+    "schedule": "*/5 * * * * *",
+    "enabled": true
+  }
+]
