@@ -13,6 +13,13 @@
             "priority": 2,
             "isEnabled": true,
             "children": []
+          },
+          {
+            "name": "Update HIV Summary Extended",
+            "procedure": "CALL etl.build_flat_hiv_summary_extended('sync',400,20,1,true);",
+            "priority": 3,
+            "isEnabled": true,
+            "children": []
           }
         ]
       },
