@@ -4,7 +4,6 @@ const TIMEOUT_INTERVAL = 3 * 1000; // 3 seconds
 
 const { syncBaseTables } = require('./base-sync');
 const { syncFlatTables } = require('./process-manager');
-const { scheduleTasks } = require('./scheduler/scheduler');
 
 const dayTimeSync = async () => {
   console.log(
@@ -76,8 +75,5 @@ const startSync = async () => {
     await nightTimeSync();
   }
 };
-
-// schedule task
-scheduleTasks();
 
 startSync();
