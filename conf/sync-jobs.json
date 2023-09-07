@@ -284,7 +284,14 @@
       {
         "name": "Update Prediction Model's Days Defaulted",
         "procedure": "CALL predictions.generate_flat_ml_days_defaulted_v1_0();",
-        "priority": 30,
+        "priority": 31,
+        "isEnabled": true,
+        "children": []
+      },
+      {
+        "name": "Close Visits",
+        "procedure": "UPDATE amrs_migration.visit v SET v.date_stopped = DATE_ADD(v.date_started, INTERVAL 12 HOUR), v.changed_by = 165703, v.date_changed = NOW() WHERE v.date_stopped IS NULL AND ABS(TIMESTAMPDIFF(HOUR, v.date_started, NOW())) >= 12 AND v.voided = 0;",
+        "priority": 32,
         "isEnabled": true,
         "children": []
       }
