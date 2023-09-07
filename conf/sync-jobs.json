@@ -95,6 +95,13 @@
         "priority": 8,
         "isEnabled": true,
         "children": []
+      },
+      {
+        "name": "Update HEI Summary",
+        "procedure": "CALL generate_flat_hei_summary_v1_0('sync',12,25, 1);",
+        "priority": 9,
+        "isEnabled": true,
+        "children": []
       }
     ],
     "night": [
@@ -212,6 +219,13 @@
         "children": []
       },
       {
+        "name": "Update HEI Monthly Dataset",
+        "procedure": "CALL etl.generate_hei_monthly_report_dataset_v1_0('sync',1,100000,100,'2013-01-01');",
+        "priority": 34,
+        "isEnabled": true,
+        "children": []
+      },
+      {
         "name": "Update Surge weekly report",
         "procedure": "CALL etl.generate_surge_weekly_report_dataset_v1('sync',10,15000,100,true);",
         "priority": 16,
@@ -292,6 +306,13 @@
         "name": "Close Visits",
         "procedure": "UPDATE amrs_migration.visit v SET v.date_stopped = DATE_ADD(v.date_started, INTERVAL 12 HOUR), v.changed_by = 165703, v.date_changed = NOW() WHERE v.date_stopped IS NULL AND ABS(TIMESTAMPDIFF(HOUR, v.date_started, NOW())) >= 12 AND v.voided = 0;",
         "priority": 32,
+        "isEnabled": true,
+        "children": []
+      },
+      {
+        "name": "Flatten Identifiers",
+        "procedure": "call etl.build_flat_patient_identifiers_v1();",
+        "priority": 33,
         "isEnabled": true,
         "children": []
       }
