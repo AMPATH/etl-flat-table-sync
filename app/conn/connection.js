@@ -13,6 +13,16 @@ const connectionPool = mysql.createPool({
   connectionLimit: config.mysql.connectionLimit,
 });
 
+const amrsConnectionPool = mysql.createPool({
+  host: config.amrsmysql.host,
+  user: config.amrsmysql.user,
+  password: config.amrsmysql.password,
+  database: config.amrsmysql.database,
+  port: config.amrsmysql.port,
+  connectionLimit: config.amrsmysql.connectionLimit,
+});
+
 module.exports = {
   connectionPool: connectionPool,
+  amrsConnectionPool: amrsConnectionPool
 };
